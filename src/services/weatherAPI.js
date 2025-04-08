@@ -1,5 +1,5 @@
 // src/services/weatherAPI.js
-const API_KEY = 'YOUR_API_KEY'; // In real app, use environment variables
+const API_KEY = 'd23f583daabd4ac99e2174844250804'; 
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
 export const getWeatherData = async (location) => {

@@ -21,7 +21,10 @@ function App() {
       
       // We'll implement this service later
       const data = await getWeatherData(loc);
-      setWeatherData(data.current);
+      setWeatherData({
+        current: data.current,
+        location: data.location
+      });
       setForecastData(data.forecast);
       setLocation(loc);
     } catch (err) {
@@ -60,13 +63,13 @@ function App() {
       
       {error && <ErrorDisplay error={error} />}
       
-      {weatherData && (
-        <WeatherDisplay 
-          weather={weatherData} 
-          forecast={forecastData} 
-          location={location}
-        />
-      )}
+      {weatherData && forecastData && (
+      <WeatherDisplay 
+      weather={weatherData.current} 
+      forecast={forecastData}
+      location={weatherData.location}
+      />
+    )}
     </div>
   );
 }
