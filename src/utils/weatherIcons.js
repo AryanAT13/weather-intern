@@ -6,15 +6,15 @@ export const getWeatherIcon = (code, isDay = 1) => {
       1003: isDay ? '🌤️' : '🌤️', // Partly cloudy
       1006: '☁️', // Cloudy
       1009: '🌫️', // Overcast
-      1030: '🌫️', // Mist
+      1030: '😶‍🌫️', // Mist
       1063: '🌦️', // Patchy rain
-      1066: '🌨️', // Patchy snow
+      1066: '🌨️', // Patchy snowsnow
       1069: '🌨️', // Patchy sleet
       1072: '🌧️', // Patchy freezing drizzle
       1087: '🌩️', // Thundery outbreaks
       1114: '❄️', // Blowing snow
       1117: '❄️', // Blizzard
-      1135: '🌫️', // Fog
+      1135: '😶‍🌫️', // Fog
       1147: '🌫️', // Freezing fog
       1150: '🌧️', // Patchy light drizzle
       1153: '🌧️', // Light drizzle

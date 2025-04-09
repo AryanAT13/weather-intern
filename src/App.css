@@ -1,27 +1,64 @@
-/* src/App.css */
+/* A richer, slightly modernized styling */
+
+/* Overall app container with a gradient background */
 .app {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f0f4ff, #d9e4ff);
+  min-height: 100vh;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.location-input {
+/* Header and footer styling */
+.app-header, .app-footer {
+  text-align: center;
   margin-bottom: 20px;
 }
 
+.app-header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.app-subtitle {
+  margin: 0;
+  color: #555;
+}
+
+/* Location Input */
+.location-input {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .location-input input {
-  padding: 8px;
+  padding: 10px;
   width: 60%;
   margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: box-shadow 0.3s;
+}
+
+.location-input input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0,123,255,0.5);
 }
 
 .location-input button {
-  padding: 8px 12px;
+  padding: 10px 16px;
   background-color: #007bff;
   color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.location-input button:hover {
+  background-color: #0056b3;
 }
 
 .location-input button.current-location-btn {
@@ -35,18 +72,21 @@
   margin-top: 5px;
 }
 
+/* Loading, error and weather sections */
 .loading {
   text-align: center;
   padding: 20px;
 }
 
-.current-weather {
+/* Weather Card Styling */
+.current-weather, .forecast {
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px;
 }
 
+/* Weather Components */
 .weather-main {
   display: flex;
   align-items: center;
@@ -56,11 +96,7 @@
 .weather-icon {
   text-align: center;
   margin-right: 30px;
-}
-
-.weather-icon span {
-  display: block;
-  margin-top: 5px;
+  font-size: 2rem;
 }
 
 .weather-temp {
@@ -68,12 +104,12 @@
 }
 
 .weather-temp .temp {
-  font-size: 2em;
+  font-size: 2.2em;
   font-weight: bold;
 }
 
 .weather-temp .feels-like {
-  font-size: 0.8em;
+  font-size: 0.9em;
   color: #666;
 }
 
@@ -86,15 +122,11 @@
 .weather-details div {
   display: flex;
   justify-content: space-between;
+  font-size: 0.9em;
 }
 
-.forecast {
-  background-color: #f8f9fa;
-  padding: 20px;
-  border-radius: 5px;
-}
-
-.forecast-days {
+/* Forecast Scroller */
+.forecast-days, .forecast-scroller {
   display: flex;
   overflow-x: auto;
   gap: 15px;
@@ -102,33 +134,24 @@
 }
 
 .forecast-day {
-  min-width: 100px;
+  min-width: 140px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   text-align: center;
-  padding: 10px;
-  background-color: white;
-  border-radius: 5px;
 }
 
-.forecast-date {
-  font-weight: bold;
-  margin-bottom: 5px;
+.today {
+  border: 2px solid #007bff;
 }
 
-.forecast-temp {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 5px 0;
+.forecast-details {
+  margin-top: 10px;
+  font-size: 0.9em;
 }
 
-.forecast-temp .max-temp {
-  font-weight: bold;
-}
-
-.forecast-temp .min-temp {
-  color: #666;
-}
-
+/* Error Display */
 .error-display {
   background-color: #fff3cd;
   padding: 15px;
@@ -137,12 +160,16 @@
   color: #856404;
 }
 
-.error-display ul {
-  margin-top: 10px;
-  padding-left: 20px;
+.error-display button {
+  padding: 6px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-/* Skeleton Animation */
+/* Skeleton Animations */
 @keyframes pulse {
   0% { opacity: 0.6; }
   50% { opacity: 0.3; }
@@ -155,49 +182,11 @@
   border-radius: 4px;
 }
 
-.skeleton-current {
-  display: flex;
-  gap: 20px;
-  align-items: center;
+.skeleton-current, .skeleton-forecast {
   margin-bottom: 30px;
 }
 
-.skeleton-forecast {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 10px 0;
-}
-
-/* Prevent skeleton layout shift */
-.skeleton-container {
-  min-height: 400px;
-}
-
-.forecast-scroller {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 10px 0;
-}
-
-.forecast-day {
-  min-width: 140px;
-  padding: 15px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.today {
-  border: 2px solid #007bff;
-}
-
-.forecast-details {
-  margin-top: 10px;
-  font-size: 0.9em;
-}
-
+/* Mobile responsiveness */
 @media (max-width: 600px) {
   .location-input input {
     width: 100%;

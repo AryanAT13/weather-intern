@@ -1,23 +1,19 @@
-// components/LocationInput.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const LocationInput = ({ onSearch, onCurrentLocation }) => {
   const [inputValue, setInputValue] = useState('');
   const [validationError, setValidationError] = useState('');
 
-  // Human touch: Manual input validation
   const validateInput = (value) => {
-    const validCoordinate = /^[-]?\d{1,3}(\.\d+)?,\s*[-]?\d{1,3}(\.\d+)?$/.test(value);
-    const validZip = /^\d{5}(-\d{4})?$/.test(value);
-    
+    // Allow city names, ZIP, or coordinates as long as the length is >= 2
     if (!value.trim()) {
       setValidationError('');
-    } else if (validCoordinate || validZip) {
-      setValidationError('');
-    } else if (value.length < 2) {
+    } else if (value.trim().length < 2) {
       setValidationError('Location too short');
     } else {
-      setValidationError('Valid formats: City, ZIP, or Lat,Long');
+      // Optionally, add more specific checks for coordinate or ZIP,
+      // but for now, allow any input of at least 2 characters.
+      setValidationError('');
     }
   };
 
@@ -25,6 +21,8 @@ const LocationInput = ({ onSearch, onCurrentLocation }) => {
     e.preventDefault();
     if (inputValue.trim() && !validationError) {
       onSearch(inputValue.trim());
+    } else {
+      setValidationError('Please enter a valid location');
     }
   };
 
@@ -44,7 +42,7 @@ const LocationInput = ({ onSearch, onCurrentLocation }) => {
         />
         <button 
           type="submit" 
-          disabled={!!validationError}
+          disabled={!!validationError || !inputValue.trim()}
           title={validationError ? 'Fix input errors first' : ''}
         >
           Search
@@ -66,4 +64,5 @@ const LocationInput = ({ onSearch, onCurrentLocation }) => {
     </div>
   );
 };
+
 export default LocationInput;

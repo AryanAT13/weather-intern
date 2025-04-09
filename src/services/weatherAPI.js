@@ -1,29 +1,52 @@
-// src/services/weatherAPI.js
-const API_KEY = 'd23f583daabd4ac99e2174844250804'; 
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY || 'd23f583daabd4ac99e2174844250804';
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
 export const getWeatherData = async (location) => {
   try {
-    // First validate the location input
-    if (!location || typeof location !== 'string') {
-      throw new Error('Please enter a valid location');
+    if (!location?.trim()) {
+      throw new Error('Please enter a location');
     }
 
-    // Fetch current weather and forecast in one call
+    console.log(`[WeatherAPI] Fetching data for: ${location}`);
+    
     const response = await fetch(
-      `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(location)}&days=5`
+      `${BASE_URL}/forecast.json?key=${API_KEY}&q=${encodeURIComponent(location)}&days=5&aqi=yes&alerts=yes`
     );
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error?.message || 'Failed to fetch weather data');
+      const apiMessage = errorData.error?.message;
+      
+      const errorMap = {
+        'q not found': 'Location not found. Try another city or postal code.',
+        'API key': 'Service unavailable. Please try again later.',
+        'limit exceeded': 'API quota reached'
+      };
+      
+      const userMessage = Object.entries(errorMap).find(([key]) => 
+        apiMessage?.includes(key)
+      )?.[1] || apiMessage;
+
+      throw new Error(userMessage || 'Failed to fetch weather data');
     }
 
     const data = await response.json();
     
-    // Validate API response structure
-    if (!data.current || !data.forecast || !data.location) {
-      throw new Error('Invalid weather data received');
+    // Validation of expected fields can remain as is
+    const requiredFields = [
+      'current.temp_c',
+      'current.condition.text',
+      'forecast.forecastday'
+    ];
+    
+    const isValid = requiredFields.every(field => {
+      const keys = field.split('.');
+      return keys.reduce((obj, key) => obj?.[key], data) !== undefined;
+    });
+
+    if (!isValid) {
+      console.error('Invalid API response structure:', data);
+      throw new Error('Received incomplete weather data');
     }
 
     return {
@@ -32,7 +55,13 @@ export const getWeatherData = async (location) => {
       location: data.location
     };
   } catch (error) {
-    console.error('Weather API Error:', error);
-    throw new Error(error.message || 'Unable to retrieve weather data');
+    console.error('[WeatherAPI] Failed:', error.message);
+    throw error;
   }
+};
+
+// A helper function example (optional)
+const calculateHeatIndex = (tempC, humidity) => {
+  if (tempC < 27 || humidity < 40) return null;
+  return Math.round(tempC + 0.1 * humidity);
 };

@@ -1,4 +1,3 @@
-// src/components/Forecast.jsx
 import React from 'react';
 import { getWeatherIcon } from '../utils/weatherIcons';
 
