@@ -2,17 +2,19 @@
 
 /* Overall app container with a gradient background */
 .app {
-  max-width: 800px;
-  margin: 0 auto;
+  min-height: 100vh;
+  background: url('./assets/bg-weather.jpg') no-repeat center center;
+  background-size: cover;
+  color: #fff; /* Use light text if the background is dark */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #f0f4ff, #d9e4ff);
-  min-height: 100vh;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-/* Header and footer styling */
-.app-header, .app-footer {
+/* Header styles */
+.app-header {
   text-align: center;
   margin-bottom: 20px;
 }
@@ -20,14 +22,27 @@
 .app-header h1 {
   margin: 0;
   font-size: 2rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 .app-subtitle {
   margin: 0;
-  color: #555;
+  font-size: 1.1rem;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* Location Input */
+/* Welcome Panel Styles (for when no weather is displayed) */
+.welcome-panel {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Location Input Field and Button Enhancements */
 .location-input {
   margin-bottom: 20px;
   text-align: center;
@@ -35,7 +50,7 @@
 
 .location-input input {
   padding: 10px;
-  width: 60%;
+  width: 40%;
   margin-right: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -50,7 +65,7 @@
 .location-input button {
   padding: 10px 16px;
   background-color: #007bff;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -68,8 +83,15 @@
 
 .input-hint {
   font-size: 0.8em;
-  color: #666;
+  color: #fff;
   margin-top: 5px;
+}
+
+/* Footer styling */
+.app-footer {
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(0,0,0,0.2);
 }
 
 /* Loading, error and weather sections */
@@ -79,11 +101,23 @@
 }
 
 /* Weather Card Styling */
-.current-weather, .forecast {
-  background-color: #f8f9fa;
+.current-weather,
+.forecast,
+.weather-display {
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
+  color: #fff; /* text color */
+  border-radius: 8px;
   padding: 20px;
-  border-radius: 5px;
-  margin-bottom: 20px;
+}
+
+/* If you have separate classes for the text in .current-weather / .forecast, 
+   you can override them to ensure they're white. */
+.weather-main,
+.weather-details,
+.forecast-temp,
+.forecast-date,
+.forecast-condition {
+  color: #fff;
 }
 
 /* Weather Components */
@@ -125,30 +159,114 @@
   font-size: 0.9em;
 }
 
-/* Forecast Scroller */
-.forecast-days, .forecast-scroller {
+.header-icon {
+  width: 100px;        /* adjust size */
+  height: auto;       /* maintain aspect ratio */
+  margin-bottom: 10px;  /* space below image */
+}
+
+/* Forecast Container - Improved Version */
+.forecast-scroller {
   display: flex;
-  overflow-x: auto;
+  width: 100%;
   gap: 15px;
   padding: 10px 0;
+  scrollbar-width: thin; /* For better scrollbar styling */
+}
+
+.forecast-days {
+  display: flex;
+  width: 100%;
+  justify-content: space-between; /* This ensures even distribution */
+  gap: 15px; /* Fallback for older browsers */
 }
 
 .forecast-day {
-  min-width: 140px;
+  flex: 1; /* Each day takes equal space */
+  min-width: 140px; /* Minimum width */
+  max-width: 200px; /* Maximum width */
   padding: 15px;
-  background: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   text-align: center;
 }
 
-.today {
-  border: 2px solid #007bff;
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .forecast-days {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 10px; /* Space for scroll */
+    justify-content: flex-start; /* Align left for scrolling */
+  }
+  
+  .forecast-day {
+    flex: 0 0 auto; /* Disable flex grow for mobile */
+  }
 }
 
+/* Today's forecast highlight */
+.today {
+  border: 2px solid #007bff;
+  position: relative;
+}
+
+/* Forecast details */
 .forecast-details {
   margin-top: 10px;
   font-size: 0.9em;
+  color: #fff;
+}
+
+/* Custom scrollbar for better UX */
+.forecast-days::-webkit-scrollbar {
+  height: 6px;
+}
+
+.forecast-days::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.3);
+  border-radius: 3px;
+}
+
+/* Updated CSS for Temperature Styling */
+.forecast-temp {
+  display: flex;
+  justify-content: center;
+  gap: 8px; /* Space between temps */
+  margin: 10px 0;
+}
+
+.max-temp {
+  color: #ff4444; /* Red color */
+  font-weight: bold;
+  padding: 2px 6px;
+  background: rgba(255, 68, 68, 0.1); /* Subtle red background */
+  border-radius: 4px;
+}
+
+.min-temp {
+  color: #4488ff; /* Blue color */
+  font-weight: bold;
+  padding: 2px 6px;
+  background: rgba(68, 136, 255, 0.1); /* Subtle blue background */
+  border-radius: 4px;
+}
+
+/* Optional: Add temperature labels */
+.max-temp::after {
+  content: "H";
+  font-size: 0.6em;
+  margin-left: 4px;
+  opacity: 0.7;
+}
+
+.min-temp::after {
+  content: "L";
+  font-size: 0.6em;
+  margin-left: 4px;
+  opacity: 0.7;
 }
 
 /* Error Display */

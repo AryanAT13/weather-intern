@@ -1,3 +1,4 @@
+// Forecast Component JSX Update
 import React from 'react';
 import { getWeatherIcon } from '../utils/weatherIcons';
 

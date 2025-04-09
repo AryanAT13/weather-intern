@@ -59,7 +59,7 @@ const LocationInput = ({ onSearch, onCurrentLocation }) => {
         <div className="validation-error">{validationError}</div>
       )}
       <div className="input-hint">
-        Try: City: New York, Pincode: 90210, Latitude: 25.7617,-74.0060.
+        Try: City: Miami, Pincode: 90210, Latitude: 28.4595, 77.0266.
       </div>
     </div>
   );
