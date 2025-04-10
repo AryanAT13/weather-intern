@@ -69,3 +69,5 @@ export const getWeatherData = async (location) => {
   }
 };
 
+
+
