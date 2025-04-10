@@ -6,10 +6,27 @@ if (!API_KEY) {
 
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
+// Unified error messages that match ErrorDisplay's expectations
+const ERROR_MESSAGES = {
+  LOCATION: {
+    invalidInput: 'Please enter a location',
+    notFound: 'location not found'
+  },
+  API: {
+    quota: 'api quota reached',
+    unavailable: 'service unavailable',
+    invalidResponse: 'invalid weather data received'
+  },
+  NETWORK: {
+    failure: 'failed to fetch weather data'
+  }
+};
+
 export const getWeatherData = async (location) => {
   try {
+    // Validate input
     if (!location?.trim()) {
-      throw new Error('Please enter a location');
+      throw new Error(ERROR_MESSAGES.LOCATION.invalidInput);
     }
 
     console.log(`[WeatherAPI] Fetching data for: ${location}`);
@@ -20,24 +37,26 @@ export const getWeatherData = async (location) => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      const apiMessage = errorData.error?.message;
+      const apiMessage = errorData.error?.message || '';
       
-      const errorMap = {
-        'q not found': 'Location not found. Try another city or postal code.',
-        'API key': 'Service unavailable. Please try again later.',
-        'limit exceeded': 'API quota reached'
+      // Map API errors to user-friendly messages
+      const errorMapping = {
+        'q not found': ERROR_MESSAGES.LOCATION.notFound,
+        'API key': ERROR_MESSAGES.API.unavailable,
+        'limit exceeded': ERROR_MESSAGES.API.quota
       };
-      
-      const userMessage = Object.entries(errorMap).find(([key]) => 
-        apiMessage?.includes(key)
-      )?.[1] || apiMessage;
 
-      throw new Error(userMessage || 'Failed to fetch weather data');
+      // Find the most specific error message
+      const matchedError = Object.entries(errorMapping).find(([key]) => 
+        apiMessage.toLowerCase().includes(key)
+      );
+
+      throw new Error(matchedError?.[1] || apiMessage || ERROR_MESSAGES.NETWORK.failure);
     }
 
     const data = await response.json();
     
-
+    // Validate response structure
     const requiredFields = [
       'current.temp_c',
       'current.condition.text',
@@ -51,7 +70,7 @@ export const getWeatherData = async (location) => {
 
     if (!isValid) {
       console.error('Invalid API response structure:', data);
-      throw new Error('Received incomplete weather data');
+      throw new Error(ERROR_MESSAGES.API.invalidResponse);
     }
 
     return {
@@ -65,9 +84,9 @@ export const getWeatherData = async (location) => {
       location,
       timestamp: new Date().toISOString()
     });
-    throw new Error('Weather service unavailable - please try again later');
+  
+    // Ensure error message is preserved
+    const finalErrorMessage = error.message || ERROR_MESSAGES.NETWORK.failure;
+    throw new Error(finalErrorMessage);
   }
 };
-
-
-

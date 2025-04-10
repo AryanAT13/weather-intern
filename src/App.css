@@ -86,10 +86,50 @@
 }
 
 /* Footer styling */
+/* Footer Styles */
 .app-footer {
-  text-align: center;
-  padding: 10px;
-  background-color: rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  font-size: 0.9rem;
+  margin-top: 20px;
+}
+
+.footer-left {
+  max-width: 70%;
+}
+
+.developer-info {
+  margin-bottom: 8px;
+}
+
+.pm-accelerator-info {
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.last-updated {
+  align-self: flex-end;
+  text-align: right;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .app-footer {
+    flex-direction: column;
+  }
+  
+  .footer-left {
+    max-width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .last-updated {
+    align-self: flex-start;
+    text-align: left;
+  }
 }
 
 
@@ -376,5 +416,3 @@
     grid-template-columns: 1fr;
   }
 }
-
-
