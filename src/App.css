@@ -377,27 +377,4 @@
   }
 }
 
-.location-flex {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-
-@media (max-width: 480px) {
-  .location-flex {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .location-input button {
-    width: 100%;
-    margin-left: 0;
-  }
-
-  .location-input input {
-    width: 100%;
-  }
-}
 
