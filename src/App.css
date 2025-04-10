@@ -1,11 +1,9 @@
-/* A richer, slightly modernized styling */
 
-/* Overall app container with a gradient background */
 .app {
   min-height: 100vh;
   background: url('./assets/bg-weather.jpg') no-repeat center center;
   background-size: cover;
-  color: #fff; /* Use light text if the background is dark */
+  color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -31,7 +29,7 @@
   text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* Welcome Panel Styles (for when no weather is displayed) */
+/* When no weather is displayed*/
 .welcome-panel {
   background-color: rgba(255, 255, 255, 0.8);
   color: #333;
@@ -43,7 +41,6 @@
 }
 
 
-/* Location Input Field and Button Enhancements */
 .location-input {
   margin-bottom: 20px;
   text-align: center;
@@ -95,7 +92,7 @@
   background-color: rgba(0,0,0,0.2);
 }
 
-/* Loading, error and weather sections */
+
 .loading {
   text-align: center;
   padding: 20px;
@@ -105,16 +102,14 @@
 .current-weather,
 .forecast,
 .weather-display {
-  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black overlay */
-  color: #fff; /* text color */
+  background-color: rgba(0, 0, 0, 0.5); 
+  color: #fff; 
   border-radius: 8px;
   padding: 20px;
   position: relative;
   padding-bottom: 60px;
 }
 
-/* If you have separate classes for the text in .current-weather / .forecast, 
-   you can override them to ensure they're white. */
 .weather-main,
 .weather-details,
 .forecast-temp,
@@ -123,7 +118,6 @@
   color: #fff;
 }
 
-/* Weather Components */
 .weather-main {
   display: flex;
   align-items: center;
@@ -146,18 +140,34 @@
 }
 
 .weather-temp .feels-like {
-  margin-left: 20px;      /* space between main temp and feels-like */
-  color: #ccc;            /* lighten from, say, #999 or #666 */
-  font-size: 0.9rem;      /* keep it slightly smaller than main temp */
+  margin-left: 20px;      
+  color: #ccc;     
+  font-size: 0.9rem;      
 }
 
 .weather-advisory {
   position: absolute;
   bottom: 5px;
   right: 12px;
-  color: #ffd700;           /* Golden yellow for visibility */
+  color: #ffd700;          
   font-weight: bold;
   font-size: 1rem;
+  text-align: right;
+  line-height: 1.4;
+  max-width: 90%;
+  word-wrap: break-word;
+}
+
+@media (max-width: 600px) {
+  .weather-advisory {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    margin-top: 10px;
+    text-align: left;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
 }
 
 .weather-details {
@@ -169,24 +179,23 @@
 .weather-details div {
   display: flex;
   justify-content: space-between;
-  font-size: 1rem;        /* slightly bigger - you can go 1.1rem if needed */
+  font-size: 1rem;        
   font-weight: 600;  
 }
 
 .header-icon {
-  width: 100px;        /* adjust size */
-  height: auto;       /* maintain aspect ratio */
-  margin-bottom: 10px;  /* space below image */
+  width: 100px;       
+  height: auto;       
+  margin-bottom: 10px;  
 }
 
-/* Forecast Container - Improved Version */
 .forecast-scroller {
   display: flex;
   width: 100%;
   gap: 15px;
   padding: 10px 0;
   scrollbar-width: thin;
-  overflow-x: hidden; /* Contain horizontal overflow */
+  overflow-x: hidden; 
 }
 
 .forecast-days {
@@ -194,7 +203,7 @@
   width: 100%;
   justify-content: space-between;
   gap: 15px;
-  box-sizing: border-box; /* Add this */
+  box-sizing: border-box; 
 }
 
 .forecast-day {
@@ -207,7 +216,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   text-align: center;
-  box-sizing: border-box; /* Add this */
+  box-sizing: border-box; 
 }
 
 /* Mobile responsiveness */
@@ -215,41 +224,38 @@
   .forecast-days {
     display: flex;
     overflow-x: auto;
-    padding-bottom: 10px; /* Space for scroll */
-    justify-content: flex-start; /* Align left for scrolling */
+    padding-bottom: 10px; 
+    justify-content: flex-start; 
   }
   
   .forecast-days {
-    width: max-content; /* Let content define width */
-    min-width: 100%; /* Ensure full width */
-    padding: 0 15px 10px; /* Add left/right padding */
+    width: max-content; 
+    min-width: 100%; 
+    padding: 0 15px 10px; 
   }
 
   .forecast-scroller {
-    overflow-x: auto; /* Enable horizontal scroll for container */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
   }
   .forecast-day {
-    flex: 0 0 calc(140px + 5vw); /* Dynamic mobile width */
-    min-width: unset; /* Override desktop min-width */
-    scroll-snap-align: start; /* Better scroll snapping */
+    flex: 0 0 calc(140px + 5vw); 
+    min-width: unset; 
+    scroll-snap-align: start; 
   }
 }
 
-/* Today's forecast highlight */
 .today {
   border: 2px solid #007bff;
   position: relative;
 }
 
-/* Forecast details */
 .forecast-details {
   margin-top: 10px;
   font-size: 0.9em;
   color: #fff;
 }
 
-/* Custom scrollbar for better UX */
 .forecast-days::-webkit-scrollbar {
   height: 6px;
 }
@@ -259,31 +265,29 @@
   border-radius: 3px;
 }
 
-/* Updated CSS for Temperature Styling */
 .forecast-temp {
   display: flex;
   justify-content: center;
-  gap: 8px; /* Space between temps */
+  gap: 8px; 
   margin: 10px 0;
 }
 
 .max-temp {
-  color: #ff4444; /* Red color */
+  color: #ff4444; 
   font-weight: bold;
   padding: 2px 6px;
-  background: rgba(255, 68, 68, 0.1); /* Subtle red background */
+  background: rgba(255, 68, 68, 0.1); 
   border-radius: 4px;
 }
 
 .min-temp {
-  color: #4488ff; /* Blue color */
+  color: #4488ff; 
   font-weight: bold;
   padding: 2px 6px;
-  background: rgba(68, 136, 255, 0.1); /* Subtle blue background */
+  background: rgba(68, 136, 255, 0.1); 
   border-radius: 4px;
 }
 
-/* Optional: Add temperature labels */
 .max-temp::after {
   content: "H";
   font-size: 0.6em;
@@ -343,9 +347,6 @@
 }
 
 
-
-
-/* Mobile responsiveness */
 @media (max-width: 600px) {
   .location-input input {
     width: 100%;

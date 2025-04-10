@@ -1,4 +1,9 @@
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY || 'd23f583daabd4ac99e2174844250804';
+const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+
+if (!API_KEY) {
+  throw new Error('Missing API key configuration. Please define REACT_APP_WEATHER_API_KEY in your .env file.');
+}
+
 const BASE_URL = 'https://api.weatherapi.com/v1';
 
 export const getWeatherData = async (location) => {
@@ -32,7 +37,7 @@ export const getWeatherData = async (location) => {
 
     const data = await response.json();
     
-    // Validation of expected fields can remain as is
+
     const requiredFields = [
       'current.temp_c',
       'current.condition.text',
@@ -55,8 +60,12 @@ export const getWeatherData = async (location) => {
       location: data.location
     };
   } catch (error) {
-    console.error('[WeatherAPI] Failed:', error.message);
-    throw error;
+    console.error('[WeatherAPI] Critical failure:', {
+      error: error.message,
+      location,
+      timestamp: new Date().toISOString()
+    });
+    throw new Error('Weather service unavailable - please try again later');
   }
 };
 

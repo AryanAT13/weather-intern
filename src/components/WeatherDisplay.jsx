@@ -1,6 +1,6 @@
+// Unified Forecast component to avoid redundancy
 import React from 'react';
 import CurrentWeather from './CurrentWeather';
-// You may also import Forecast here if you plan to use it separately.
 import { getWeatherIcon } from '../utils/weatherIcons';
 
 const ForecastDay = ({ day, isToday }) => {
@@ -25,12 +25,9 @@ const ForecastDay = ({ day, isToday }) => {
         <span className="min-temp">{Math.round(day.day.mintemp_c)}°</span>
       </div>
       <div className="forecast-details">
-        <div className="precipitation">
-          {day.day.daily_chance_of_rain}%
-        </div>
-        <div className="wind">
-          {day.day.maxwind_kph} km/h
-        </div>
+        <div className="precipitation">💧 {day.day.daily_chance_of_rain}%</div>
+        <div className="wind">🍃 {day.day.maxwind_kph} km/h</div>
+        <div className="condition-text">{day.day.condition.text}</div>
       </div>
     </div>
   );
@@ -40,18 +37,20 @@ const WeatherDisplay = ({ weather, forecast, location }) => {
   return (
     <div className="weather-display">
       <CurrentWeather weather={weather} location={location} />
-      <div className="forecast-section">
-        <h2>5-Day Forecast</h2>
-        <div className="forecast-scroller">
-          {forecast.map((day, index) => (
-            <ForecastDay 
-              key={day.date_epoch || index}
-              day={day}
-              isToday={index === 0}
-            />
-          ))}
+      {forecast?.length > 0 && (
+        <div className="forecast-section">
+          <h2>5-Day Forecast</h2>
+          <div className="forecast-scroller">
+            {forecast.map((day, index) => (
+              <ForecastDay
+                key={day.date_epoch || index}
+                day={day}
+                isToday={index === 0}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

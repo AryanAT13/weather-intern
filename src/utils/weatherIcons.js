@@ -1,6 +1,5 @@
 // src/utils/weatherIcons.js
 export const getWeatherIcon = (code, isDay = 1) => {
-    // Simplified version - in a real app you'd have more conditions
     const iconMap = {
       1000: isDay ? '☀️' : '🌙', // Sunny/Clear
       1003: isDay ? '🌤️' : '🌤️', // Partly cloudy
