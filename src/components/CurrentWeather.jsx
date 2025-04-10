@@ -2,7 +2,32 @@ import React from 'react';
 import { getWeatherIcon } from '../utils/weatherIcons';
 
 const CurrentWeather = ({ weather, location }) => {
+  const getWeatherAdvisory = (weather) => {
+    const advisories = [];
+  
+    if (weather.temp_c > 35) {
+      advisories.push('⚠️ Heat Warning: Stay hydrated!');
+    }
+    if (weather.wind_kph > 30) {
+      advisories.push('💨 Wind Advisory: Secure outdoor items');
+    }
+    if (weather.humidity > 80) {
+      advisories.push('💧 High Humidity: Stay cool and hydrated');
+    }
+    if (weather.pressure_mb < 1000) {
+      advisories.push('🌪️ Low Pressure: Possible rain or stormy weather');
+    }
+    if (weather.uv > 8) {
+      advisories.push('🌞 UV Alert: Wear sunscreen & sunglasses');
+    }
+  
+    return advisories.length > 0 ? advisories.join(' | ') : null;
+  };
+  
+
   if (!weather) return null;
+
+  const advisoryMessage = getWeatherAdvisory(weather);
 
   return (
     <div className="current-weather">
@@ -39,6 +64,13 @@ const CurrentWeather = ({ weather, location }) => {
           <span>{weather.uv}</span>
         </div>
       </div>
+
+      {/* ✅ Weather advisory section */}
+      {advisoryMessage && (
+        <div className="weather-advisory">
+          {advisoryMessage}
+        </div>
+      )}
     </div>
   );
 };

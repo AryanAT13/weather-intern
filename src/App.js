@@ -104,7 +104,7 @@ function App() {
       )}
 
       <footer className="app-footer">
-        <p>Last updated: {new Date().toLocaleTimeString()}</p>
+        <p>Last Updated: {new Date().toLocaleTimeString()}</p>
       </footer>
     </div>
   );

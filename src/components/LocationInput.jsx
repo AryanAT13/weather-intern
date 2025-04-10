@@ -5,16 +5,7 @@ const LocationInput = ({ onSearch, onCurrentLocation }) => {
   const [validationError, setValidationError] = useState('');
 
   const validateInput = (value) => {
-    // Allow city names, ZIP, or coordinates as long as the length is >= 2
-    if (!value.trim()) {
-      setValidationError('');
-    } else if (value.trim().length < 2) {
-      setValidationError('Location too short');
-    } else {
-      // Optionally, add more specific checks for coordinate or ZIP,
-      // but for now, allow any input of at least 2 characters.
-      setValidationError('');
-    }
+    setValidationError(value.trim().length < 2 ? 'Minimum 2 characters' : '');
   };
 
   const handleSubmit = (e) => {

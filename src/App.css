@@ -42,6 +42,7 @@
   text-align: center;
 }
 
+
 /* Location Input Field and Button Enhancements */
 .location-input {
   margin-bottom: 20px;
@@ -108,6 +109,8 @@
   color: #fff; /* text color */
   border-radius: 8px;
   padding: 20px;
+  position: relative;
+  padding-bottom: 60px;
 }
 
 /* If you have separate classes for the text in .current-weather / .forecast, 
@@ -143,8 +146,18 @@
 }
 
 .weather-temp .feels-like {
-  font-size: 0.9em;
-  color: #666;
+  margin-left: 20px;      /* space between main temp and feels-like */
+  color: #ccc;            /* lighten from, say, #999 or #666 */
+  font-size: 0.9rem;      /* keep it slightly smaller than main temp */
+}
+
+.weather-advisory {
+  position: absolute;
+  bottom: 5px;
+  right: 12px;
+  color: #ffd700;           /* Golden yellow for visibility */
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .weather-details {
@@ -156,7 +169,8 @@
 .weather-details div {
   display: flex;
   justify-content: space-between;
-  font-size: 0.9em;
+  font-size: 1rem;        /* slightly bigger - you can go 1.1rem if needed */
+  font-weight: 600;  
 }
 
 .header-icon {
@@ -171,26 +185,29 @@
   width: 100%;
   gap: 15px;
   padding: 10px 0;
-  scrollbar-width: thin; /* For better scrollbar styling */
+  scrollbar-width: thin;
+  overflow-x: hidden; /* Contain horizontal overflow */
 }
 
 .forecast-days {
   display: flex;
   width: 100%;
-  justify-content: space-between; /* This ensures even distribution */
-  gap: 15px; /* Fallback for older browsers */
+  justify-content: space-between;
+  gap: 15px;
+  box-sizing: border-box; /* Add this */
 }
 
 .forecast-day {
-  flex: 1; /* Each day takes equal space */
-  min-width: 140px; /* Minimum width */
-  max-width: 200px; /* Maximum width */
+  flex: 1;
+  min-width: 140px;
+  max-width: 200px;
   padding: 15px;
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.3);
   text-align: center;
+  box-sizing: border-box; /* Add this */
 }
 
 /* Mobile responsiveness */
@@ -202,8 +219,20 @@
     justify-content: flex-start; /* Align left for scrolling */
   }
   
+  .forecast-days {
+    width: max-content; /* Let content define width */
+    min-width: 100%; /* Ensure full width */
+    padding: 0 15px 10px; /* Add left/right padding */
+  }
+
+  .forecast-scroller {
+    overflow-x: auto; /* Enable horizontal scroll for container */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
   .forecast-day {
-    flex: 0 0 auto; /* Disable flex grow for mobile */
+    flex: 0 0 calc(140px + 5vw); /* Dynamic mobile width */
+    min-width: unset; /* Override desktop min-width */
+    scroll-snap-align: start; /* Better scroll snapping */
   }
 }
 
@@ -304,12 +333,25 @@
   margin-bottom: 30px;
 }
 
+.advisory {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(255, 100, 100, 0.2);
+  color: #cc0000;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+
+
+
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   .location-input input {
     width: 100%;
     margin-bottom: 10px;
   }
+
   
   .location-input button {
     width: 48%;

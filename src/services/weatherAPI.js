@@ -60,8 +60,3 @@ export const getWeatherData = async (location) => {
   }
 };
 
-// A helper function example (optional)
-const calculateHeatIndex = (tempC, humidity) => {
-  if (tempC < 27 || humidity < 40) return null;
-  return Math.round(tempC + 0.1 * humidity);
-};
